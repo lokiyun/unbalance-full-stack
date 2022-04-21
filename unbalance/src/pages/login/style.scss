@@ -1,0 +1,88 @@
+@import "../../styles/base.scss";
+
+.login-center {
+  @include center;
+}
+
+.login-bg {
+  width: 100vw;
+  height: 100vh; 
+  background-image: url(../../assets/images/bg__login.png);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-glass {
+  @media screen and (min-width: 1000px) {
+    width: 100%;
+    height: 100%;
+    background: url(../../assets/images/bg__login.png);
+    background-size: cover;
+    background-position: center;
+    clip-path: inset(200px 200px);
+    filter: blur(0px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.login-drop-shadow {
+  height: 100%;
+  width: 100%;
+  filter: drop-shadow(0px 20px 10px rgba(0, 0, 0, 0.5));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 100%;
+  min-width: 300px;
+  max-width: 600px;
+  position: absolute;
+  color: white;
+  padding: 1rem 1rem;
+  background-color: #36393f88;
+
+  .login-form {
+    width: 100%;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 0 1rem;
+
+    label {
+      margin: 0.4rem 0;
+    }
+
+    input {
+      background-color: #202225;
+      outline: none;
+      border-radius: 1px;
+      padding: 0.5rem 1rem;
+    }
+
+    .login-button {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 1rem;
+      background-color: #4752C4;
+    }
+  }
+
+  .login-aside {
+    width: 100px;
+    @media screen and (max-width:600px) {
+      display: none;
+    }
+
+    .login-label {
+      writing-mode: tb-rl;
+      letter-spacing: 1rem;
+    }
+  }
+}

@@ -1,14 +1,26 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Directive, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
 import { UserInputError } from 'apollo-server-express';
 import { encryptPassword } from 'src/utils/cryptogram';
 import { LoginInput } from './dto/login.input';
 import { NewUserInput } from './dto/new-user.input';
 import { User } from './models/user.model';
 import { UserService } from './user.service';
+import { jwtConstants } from 'src/utils/constants';
+import { sign } from 'jsonwebtoken'
+
+const genToken = async (id) => {
+  const token = await sign({
+    userId: id,
+  }, jwtConstants.secret, {
+    expiresIn: 60 * 60 * 24
+  })
+  return token
+}
 
 @Resolver(of => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService,  private readonly jwtService: JwtService) {}
 
   @Mutation(returns => User)
   async createUser(@Args('newUserInput') newUserInput: NewUserInput): Promise<User> {
@@ -48,10 +60,13 @@ export class UserResolver {
     if (inputPwd !== userData.password) {
       throw new UserInputError("密码错误!")
     }
+
+    const token = genToken(userData._id)
     
     return {
       "email": userData.email,
-      "username": userData.username
+      "username": userData.username,
+      "token": token
     }
     
 

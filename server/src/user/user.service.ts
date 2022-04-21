@@ -7,8 +7,10 @@ import { encryptPassword, makeSalt } from 'src/utils/cryptogram';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {
 
+  }
+  
   // 保存用户
   async saveUser(data: NewUserInput): Promise<User> {
 

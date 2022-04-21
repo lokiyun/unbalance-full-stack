@@ -6,6 +6,5 @@ export class Hello {
   id: string
 
   @Field()
-  @Directive('@upper')
   title: string
 }

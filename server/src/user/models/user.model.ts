@@ -17,6 +17,10 @@ registerEnumType(UserLevel, {
 @ObjectType({ description: 'user' })
 export class User {
   @Field({ nullable: true })
+  @Prop()
+  _id?: string
+
+  @Field({ nullable: true })
   @Prop({ required: true })
   email?: string
 
@@ -41,7 +45,10 @@ export class User {
   user_level?: UserLevel
 
   @Prop()
-  passwd_salt?: string 
+  passwd_salt?: string
+
+  @Field()
+  token?: string
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

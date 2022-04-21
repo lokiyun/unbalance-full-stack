@@ -3,12 +3,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { HelloModule } from './hello/hello.module'
 import { UserModule } from './user/user.module'
+import { authDirectiveTransformer } from './common/directives/auth.directive';
 
 @Module({
   imports: [
@@ -18,12 +19,17 @@ import { UserModule } from './user/user.module'
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: "index.gql",
-      transformSchema: schema => upperDirectiveTransformer(schema, 'upper'),
+      context: ({ req }) => {
+        return {
+          token: req.headers.authorization || ''
+        }
+      },
+      transformSchema: schema => authDirectiveTransformer(schema, 'auth'),
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         directives: [
           new GraphQLDirective({
-            name: 'upper',
+            name: 'auth',
             locations: [DirectiveLocation.FIELD_DEFINITION],
           }),
         ],

@@ -1,0 +1,52 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""hello"""
+type Hello {
+  id: ID!
+  title: String!
+}
+
+"""user"""
+type User {
+  email: String
+  username: String
+  password: String
+  avatar: String
+  isBan: Boolean
+  user_level: userLevel
+}
+
+enum userLevel {
+  T
+  N
+  M
+}
+
+type Query {
+  foo: Hello!
+}
+
+type Mutation {
+  createUser(newUserInput: NewUserInput!): User!
+  login(loginInput: LoginInput!): User!
+}
+
+input NewUserInput {
+  email: String!
+  username: String!
+  password: String!
+  avatar: String
+  isBan: Boolean
+  passwd_salt: String
+  user_level: Float
+}
+
+input LoginInput {
+  email: String
+  username: String
+  password: String!
+}

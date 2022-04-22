@@ -2,14 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-directive @auth on FIELD_DEFINITION
-
-"""hello"""
-type Hello {
-  id: ID!
-  title: String!
-}
-
 """user"""
 type User {
   _id: String
@@ -29,7 +21,7 @@ enum userLevel {
 }
 
 type Query {
-  foo: Hello!
+  currentUser: User!
 }
 
 type Mutation {

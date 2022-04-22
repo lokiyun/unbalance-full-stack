@@ -36,7 +36,7 @@ input NewUserInput {
   avatar: String
   isBan: Boolean
   passwd_salt: String
-  user_level: Float
+  user_level: String
 }
 
 input LoginInput {

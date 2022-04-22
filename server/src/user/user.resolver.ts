@@ -3,16 +3,18 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserInputError } from 'apollo-server-express';
 import { GqlAuthGuard } from 'src/auth/GqlAuthGuard';
 import { CurrentUser } from './currentUser.decorator';
-import { LoginInput } from './dto/login.input';
+import { Roles } from './decorators/roles.decorator';
 import { NewUserInput } from './dto/new-user.input';
-import { User } from './models/user.model';
+import { User, UserLevel } from './models/user.model';
 import { UserService } from './user.service';
 
 @Resolver(of => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  
   @Mutation(returns => User)
+  @UseGuards(GqlAuthGuard)
   async createUser(@Args('newUserInput') newUserInput: NewUserInput): Promise<User> {
     let user = await this.userService.findByEmail(newUserInput.email)
     if (user) {

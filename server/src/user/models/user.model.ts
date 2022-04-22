@@ -4,9 +4,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 export type UserDocument = User & Document;
 
 export enum UserLevel {
-  T = -1,
-  N = 1,
-  M = 0
+  T = "visitor",
+  N = "normal",
+  M = "manager"
 }
 
 registerEnumType(UserLevel, {
@@ -42,7 +42,7 @@ export class User {
 
   @Field(type => UserLevel, { nullable: true })
   @Prop()
-  user_level?: UserLevel
+  user_level?: [UserLevel]
 
   @Prop()
   passwd_salt?: string

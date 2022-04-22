@@ -1,10 +1,10 @@
 import React from 'react';
-import Login from './pages/login';
+import IRouter from './router';
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <IRouter />
     </div>
   );
 }

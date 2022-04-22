@@ -1,0 +1,122 @@
+.main-bg {
+  background-color: #202225;
+  color: #b9bbbe;
+
+  aside {
+    padding: 1rem;
+    .main-search {
+      position: relative;
+      .icon-icon-search {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: .5rem;
+      }
+
+      input[type='text'] {
+        background-color: #333;
+        width: 100%;
+        padding: 0.5rem 1rem;
+        padding-left: 2.3rem;
+        outline: none;
+      }
+    }
+
+
+    .main-list {
+      max-width: 14rem;
+
+      &-item {
+        position: relative;
+        height: 2.75rem;
+        line-height: 2.75rem;
+        display: flex;
+        cursor: pointer;
+        
+        border-radius: 8px;
+        margin-bottom: 2px;
+
+        &:hover {
+          background-color: rgba(79,84,92,0.3);
+          .icon-icon {
+            circle {
+              stroke: #ccc;
+            }
+            path {
+              stroke: #ccc;
+            }
+            clip-path {
+              stroke: #ccc;
+            }
+          }
+          .chat-close {
+            display: block;
+          }
+        }
+
+        &.selected {
+          background-color: rgba(79,84,92,0.6);
+          .icon-icon {
+            circle {
+              stroke: #fff;
+            }
+            path {
+              stroke: #fff;
+            }
+            clip-path {
+              stroke: #fff;
+            }
+          }
+
+          .label {
+            color: #fff;
+          }
+        }
+
+        .icon-icon {
+          display: flex;
+          align-items: center;
+          margin-left: 1rem;
+        }
+
+        .label {
+          margin-left: 1rem;
+        }
+
+        .chat-close {
+          display: none;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 1rem;
+
+          &:hover {
+            .icon-icon {
+              circle {
+                stroke: #EF4444;
+              }
+              path {
+                stroke: #EF4444;
+              }
+              clip-path {
+                stroke: #EF4444;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  main {
+    width: calc(100vw - 240px);
+
+    .blank-bg {
+      width: calc(100% - 240px);
+      background-image: url(../../assets/images/bg__blank.jpg);
+      opacity: .3;
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}

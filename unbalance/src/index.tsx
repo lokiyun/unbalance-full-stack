@@ -7,6 +7,7 @@ import {
 } from "@apollo/client";
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
+import * as ws from 'ws';
 import {IconProvider, DEFAULT_ICON_CONFIGS} from '@icon-park/react'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -16,10 +17,17 @@ import '@icon-park/react/styles/index.css';
 
 const IconConfig = {...DEFAULT_ICON_CONFIGS, prefix: 'icon'}
 
+const wsClient = createClient({
+  url: "ws://localhost:4000/graphql",
+  webSocketImpl: ws,
+  retryAttempts: 0,
+});
+
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  link: new GraphQLWsLink(wsClient),
   cache: new InMemoryCache(),
 });
+// subscriptions
 
 
 const root = ReactDOM.createRoot(

@@ -19,8 +19,15 @@ import { ChatModule } from './chat/chat.module';
     ChatModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      path: '/graphql',
       subscriptions: {
-        'subscriptions-transport-ws': true
+        'subscriptions-transport-ws': {
+          path: "sub",
+          onConnect: () => {
+            console.log('open open')
+          }
+        },
+        
       },
       autoSchemaFile: "index.gql",
       context: ({ req }) => ({ req }),

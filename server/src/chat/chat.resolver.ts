@@ -21,12 +21,15 @@ export class ChatResolver {
 
   @Mutation(returns => Chat)
   async createMessage(@Args('createMessageInput') args: CreateMessageInput): Promise<Chat> {
+    console.log(args)
     pubSub.publish('messageSent', { messageSent: args });
     return args
   }
 
   @Subscription(returns => Chat, {
+    name: 'messageSent',
     filter: (payload, variables) => {
+      console.log(payload, variables)
       return payload.messageSent.to === variables.username
     }
   })

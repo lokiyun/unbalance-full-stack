@@ -10,9 +10,29 @@ import "./style.scss";
 import classNames from "classnames";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig } from "@wangeditor/editor";
+import { gql, useSubscription } from "@apollo/client";
+
+const MESSAGE_SENT = gql`
+  subscription {
+    messageSent(username: "zz") {
+      from
+      to
+      message
+    }
+  }
+`
+
 
 const Main = () => {
   const [labelSelectedIndex, setlabelSelectedIndex] = useState(1);
+
+  const { error } =useSubscription(MESSAGE_SENT, {
+    shouldResubscribe: true
+  })
+
+  useEffect(() => {
+    console.log(error)
+  })
 
   const [chatList] = useState<string[]>(["dasdas", "czxczxdas"]);
 

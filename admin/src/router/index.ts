@@ -24,10 +24,6 @@ const routes: RouteRecordRaw[] = [
     name: 'login', 
     path: '/login', 
     component: Login,
-    beforeEnter: (to, from) => {
-      // reject the navigation
-      return true
-    },
   },
 ]
 
@@ -40,11 +36,15 @@ const router = createRouter({
   routes, // `routes: routes` 的缩写
 })
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token') || ''
   // 需要将token传给服务器判断是否正确或过期
   if (token === '' || token === undefined) {
-    next({ name: 'login' })
+    if (to.name === 'login') {
+      next()
+    } else {
+      next({ name: 'login' })
+    }
   } else {
     next()
   }

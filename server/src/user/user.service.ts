@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 import { User, UserDocument, UserLevel } from './models/user.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { encryptPassword, makeSalt } from 'src/utils/cryptogram';
+import { QueryUsersInput } from './dto/query-users.input';
+import { DeleteUserInput } from './dto/delete-user.input';
 
 @Injectable()
 export class UserService {
@@ -18,7 +20,6 @@ export class UserService {
     const salt = makeSalt()
     data.password = encryptPassword(data.password, salt)
     data.passwd_salt = salt
-    data.user_level = UserLevel.T
     const createdUser = new this.userModel(data)
     return createdUser.save()
   }
@@ -47,5 +48,21 @@ export class UserService {
         new: true
       }
     )
+  }
+
+  async getUsers(queryParams: QueryUsersInput): Promise<User[]> {
+    const {
+      limit,
+      offset
+    } = queryParams
+    return this.userModel.find().skip(offset).limit(limit)
+  }
+
+  async getUsersCount(): Promise<number> {
+    return this.userModel.find().count()
+  }
+
+  async removeUser(queryParams: DeleteUserInput): Promise<User> {
+    return this.userModel.remove({ email : queryParams.email })
   }
 }

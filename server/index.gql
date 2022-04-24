@@ -4,7 +4,6 @@
 
 """user"""
 type User {
-  _id: String
   email: String
   username: String
   password: String
@@ -12,20 +11,34 @@ type User {
   isBan: Boolean
   user_level: userLevel
   token: String!
+  isOnline: Boolean
 }
 
 enum userLevel {
-  T
-  N
-  M
+  visitor
+  normal
+  manager
+}
+
+"""userlist"""
+type UserList {
+  list: [User!]
+  count: Int
 }
 
 type Query {
   currentUser: User!
+  getUsers(queryUsersInput: QueryUsersInput!): UserList!
+}
+
+input QueryUsersInput {
+  offset: Int!
+  limit: Int!
 }
 
 type Mutation {
   createUser(newUserInput: NewUserInput!): User!
+  removeUser(deleteUserInput: DeleteUserInput!): User!
   login(loginInput: LoginInput!): User!
 }
 
@@ -37,6 +50,10 @@ input NewUserInput {
   isBan: Boolean
   passwd_salt: String
   user_level: String
+}
+
+input DeleteUserInput {
+  email: String!
 }
 
 input LoginInput {

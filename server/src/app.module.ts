@@ -17,6 +17,9 @@ import { RolesGuard } from './common/roles.guard';
     AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      subscriptions: {
+        'graphql-ws': true
+      },
       autoSchemaFile: "index.gql",
       context: ({ req }) => ({ req }),
       installSubscriptionHandlers: true,

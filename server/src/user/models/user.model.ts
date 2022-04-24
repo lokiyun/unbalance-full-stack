@@ -1,12 +1,12 @@
-import { Directive, Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Directive, Field, ID, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type UserDocument = User & Document;
 
 export enum UserLevel {
-  T = "visitor",
-  N = "normal",
-  M = "manager"
+  visitor = "visitor",
+  normal = "normal",
+  manager = "manager"
 }
 
 registerEnumType(UserLevel, {
@@ -16,8 +16,6 @@ registerEnumType(UserLevel, {
 @Schema()
 @ObjectType({ description: 'user' })
 export class User {
-  @Field({ nullable: true })
-  @Prop()
   _id?: string
 
   @Field({ nullable: true })
@@ -42,13 +40,26 @@ export class User {
 
   @Field(type => UserLevel, { nullable: true })
   @Prop()
-  user_level?: [UserLevel]
+  user_level?: UserLevel
 
   @Prop()
   passwd_salt?: string
 
   @Field()
   token?: string
+
+  @Field({ nullable: true })
+  isOnline?: boolean
+
+}
+
+@ObjectType({ description: 'userlist' })
+export class UserList {
+  @Field(type => [User], { nullable: true })
+  list: User[]
+
+  @Field(type => Int, { nullable: true })
+  count: number
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

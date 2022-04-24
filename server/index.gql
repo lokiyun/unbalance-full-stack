@@ -26,9 +26,18 @@ type UserList {
   count: Int
 }
 
+"""userlist"""
+type Chat {
+  from: String!
+  to: String!
+  type: String!
+  message: String!
+}
+
 type Query {
   currentUser: User!
   getUsers(queryUsersInput: QueryUsersInput!): UserList!
+  getNotReadMessages: [Chat!]!
 }
 
 input QueryUsersInput {
@@ -40,6 +49,7 @@ type Mutation {
   createUser(newUserInput: NewUserInput!): User!
   removeUser(deleteUserInput: DeleteUserInput!): User!
   login(loginInput: LoginInput!): User!
+  createMessage(createMessageInput: CreateMessageInput!): Chat!
 }
 
 input NewUserInput {
@@ -60,4 +70,15 @@ input LoginInput {
   email: String
   username: String
   password: String!
+}
+
+input CreateMessageInput {
+  from: String!
+  to: String!
+  type: String!
+  message: String!
+}
+
+type Subscription {
+  messageSent(username: String!): Chat!
 }

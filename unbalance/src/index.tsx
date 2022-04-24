@@ -5,9 +5,12 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from "@apollo/client";
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
 import {IconProvider, DEFAULT_ICON_CONFIGS} from '@icon-park/react'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '@wangeditor/editor/dist/css/style.css'
 import './styles/index.scss';
 import '@icon-park/react/styles/index.css';
 
@@ -17,6 +20,7 @@ const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

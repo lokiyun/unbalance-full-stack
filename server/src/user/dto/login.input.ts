@@ -3,7 +3,6 @@ import { Prop } from '@nestjs/mongoose';
 import { Length, MaxLength, ValidateIf } from 'class-validator';
 
 @InputType()
-
 export class LoginInput {
   @Field({ nullable: true })
   @ValidateIf(o => o.username === "")

@@ -3,25 +3,26 @@
   color: #b9bbbe;
 
   aside {
-    padding: 1rem;
+    padding: 1rem 0;
     .main-search {
+      padding: 0 1rem;
       position: relative;
       .icon-icon-search {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        left: .5rem;
+        left: 1.5rem;
       }
 
-      input[type='text'] {
+      input[type="text"] {
         background-color: #333;
         width: 100%;
         padding: 0.5rem 1rem;
         padding-left: 2.3rem;
         outline: none;
+        border-radius: 20px;
       }
     }
-
 
     .main-list {
       max-width: 14rem;
@@ -32,12 +33,12 @@
         line-height: 2.75rem;
         display: flex;
         cursor: pointer;
-        
+
         border-radius: 8px;
         margin-bottom: 2px;
 
         &:hover {
-          background-color: rgba(79,84,92,0.3);
+          background-color: rgba(79, 84, 92, 0.3);
           .icon-icon {
             circle {
               stroke: #ccc;
@@ -55,7 +56,7 @@
         }
 
         &.selected {
-          background-color: rgba(79,84,92,0.6);
+          background-color: rgba(79, 84, 92, 0.6);
           .icon-icon {
             circle {
               stroke: #fff;
@@ -93,13 +94,13 @@
           &:hover {
             .icon-icon {
               circle {
-                stroke: #EF4444;
+                stroke: #ef4444;
               }
               path {
-                stroke: #EF4444;
+                stroke: #ef4444;
               }
               clip-path {
-                stroke: #EF4444;
+                stroke: #ef4444;
               }
             }
           }
@@ -109,14 +110,136 @@
   }
 
   main {
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
     width: calc(100vw - 240px);
 
     .blank-bg {
-      width: calc(100% - 240px);
       background-image: url(../../assets/images/bg__blank.jpg);
-      opacity: .3;
+      filter: brightness(50%);
       background-position: center;
       background-size: cover;
     }
   }
+}
+
+.my-item {
+  padding: 0 1rem;
+  display: flex;
+
+  .my-item-avatar {
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    background-image: url(../../assets/images/avatar.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+
+  .my-item-content {
+    .online-dot {
+      color: skyblue;
+    }
+  }
+}
+
+.my-friends {
+  padding: 0 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.my-friend {
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  display: flex;
+  margin-bottom: 1rem;
+  &:hover {
+    background-color: rgba(79, 84, 92, 0.3);
+  }
+  .friend-item-avatar {
+    align-self: center;
+    width: 40px;
+    height: 40px;
+    background-image: url(../../assets/images/friends/01.png);
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    margin-right: 1rem;
+  }
+
+  .friend-item-content {
+    .online-dot {
+      color: skyblue;
+    }
+
+    .offline-dot {
+      color: gray;
+    }
+  }
+}
+
+.chat-container {
+  width: calc(100% - 240px);
+  height: 100vh;
+  .chat-wrapper {
+    margin: 4rem;
+    z-index: 1;
+    .chat-title {
+      height: 2.5rem;
+      line-height: 2.5rem;
+      text-align: center;
+      background-color: #111827;
+      color: #ffffff;
+    }
+
+    .chat-content {
+      height: calc(100% - 2.5rem);
+      width: 100%;
+      background-color: #11182788;
+
+      &-editor {
+        border-top-width: 1px;
+      }
+
+      & .w-e-bar {
+        background-color: transparent;
+        color: #fff;
+
+        & button {
+          color: #fff;
+        }
+
+        & svg {
+          fill: #fff;
+        }
+
+        .w-e-bar-item:hover {
+          // background-color: #ccc;
+
+          & button {
+            color: #000;
+          }
+
+          & svg {
+            fill: #000;
+          }
+        }
+      }
+
+      & .w-e-text-container {
+        background-color: transparent;
+        color: #fff;
+      }
+    }
+  }
+}
+
+:root,
+:host {
+  --w-e-textarea-bg-color: transparent;
+  --w-e-textarea-color: #fff;
 }

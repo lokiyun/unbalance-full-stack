@@ -16,39 +16,11 @@ import "@wangeditor/editor/dist/css/style.css";
 import "./styles/index.scss";
 import "@icon-park/react/styles/index.css";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { client } from "./pages/main";
 
 const IconConfig = { ...DEFAULT_ICON_CONFIGS, prefix: "icon" };
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: "ws://localhost:4000/sub",
-    connectionParams: {
-      authToken: "bearer token",
-    },
-  })
-);
 
-// const httpLink = new HttpLink({
-//   uri: 'http://localhost:4000/graphql'
-// });
-
-// const splitLink = split(
-//   ({ query }) => {
-//     const definition = getMainDefinition(query);
-//     console.log(definition)
-//     return (
-//       definition.kind === 'OperationDefinition' &&
-//       definition.operation === 'subscription'
-//     );
-//   },
-//   wsLink,
-//   httpLink,
-// );
-
-export const client = new ApolloClient({
-  link: wsLink,
-  cache: new InMemoryCache(),
-});
 // subscriptions
 
 const root = ReactDOM.render(

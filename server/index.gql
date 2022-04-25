@@ -34,10 +34,17 @@ type Chat {
   message: String!
 }
 
+"""user"""
+type Friend {
+  userId: ID!
+  friendId: ID!
+}
+
 type Query {
   currentUser: User!
   getUsers(queryUsersInput: QueryUsersInput!): UserList!
   getNotReadMessages: [Chat!]!
+  getFriends: [Friend!]!
 }
 
 input QueryUsersInput {
@@ -50,6 +57,7 @@ type Mutation {
   removeUser(deleteUserInput: DeleteUserInput!): User!
   login(loginInput: LoginInput!): User!
   createMessage(createMessageInput: CreateMessageInput!): Chat!
+  createFriend(newFriendInput: NewFriendInput!): Friend!
 }
 
 input NewUserInput {
@@ -77,6 +85,10 @@ input CreateMessageInput {
   to: String!
   type: String!
   message: String!
+}
+
+input NewFriendInput {
+  id: ID!
 }
 
 type Subscription {

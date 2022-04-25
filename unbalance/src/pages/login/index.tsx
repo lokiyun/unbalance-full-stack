@@ -1,19 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
-import { useMutation, gql } from "@apollo/client";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
-
-
-const LOGIN_TODO = gql`
-  mutation LOGIN_TODO($username: String, $password: String!) {
-    login(loginInput: { email: $username, password: $password }) {
-      email
-      username
-    }
-  }
-`;
-
-
+import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState(
@@ -23,9 +11,7 @@ const Login = () => {
     sessionStorage.getItem("password") || ""
   );
 
-  const history = useNavigate()
-
-  const [loginTodo] = useMutation(LOGIN_TODO);
+  const history = useNavigate();
 
   const handleChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
     sessionStorage.setItem("username", event.target.value);
@@ -38,14 +24,33 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const result = await loginTodo({ variables: { username, password } });
-    console.log(result.data)
-    if (result.data) {
-      console.log(result)
-      sessionStorage.clear();
-      history("/", { replace: true })
-    }
-    
+    axios({
+      method: "POST",
+      url: "http://localhost:4000/graphql",
+      data: {
+        query: `
+          mutation  {
+            login(loginInput: { username: "abcd0007", password: "abcd0007"}) {
+              token
+              username
+            }
+          }
+        `,
+        variables: {},
+      },
+    }).then((res: any) => {
+      if (res.status === 200) {
+        const data = res.data.data;
+        localStorage.setItem("token", data.login.token);
+        sessionStorage.clear();
+        history("/", {
+          replace: true,
+          state: {
+            username: data.login.username,
+          },
+        });
+      }
+    });
   };
 
   return (

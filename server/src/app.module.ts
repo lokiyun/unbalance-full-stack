@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './common/roles.guard';
 import { ChatModule } from './chat/chat.module';
+import { FriendModule } from './friend/friend.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ChatModule } from './chat/chat.module';
     UserModule,
     AuthModule,
     ChatModule,
+    FriendModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       cors: {

@@ -14,7 +14,9 @@ import { FriendModule } from './friend/friend.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://192.168.163.128/blog'),
+    MongooseModule.forRoot('mongodb://192.168.163.128/blog', {
+      
+    }),
     UserModule,
     AuthModule,
     ChatModule,
@@ -29,17 +31,8 @@ import { FriendModule } from './friend/friend.module';
       subscriptions: {
         'graphql-ws': {
           path: "/sub",
-          onConnect: (connectionParams) => {
-            console.log('subscriptions-transport-ws open', connectionParams)
-            return {}
-          }
         },
-        'subscriptions-transport-ws': {
-          onConnect: (connectionParams) => {
-            console.log('subscriptions-transport-ws open', connectionParams)
-            return {}
-          }
-        }
+        'subscriptions-transport-ws': true
       },
       // playground: false,
       autoSchemaFile: "index.gql",

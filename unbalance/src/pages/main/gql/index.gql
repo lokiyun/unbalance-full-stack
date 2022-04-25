@@ -1,0 +1,7 @@
+subscription messageSent($username: String!) {
+  messageSent(username: $username) {
+    from
+    to
+    message
+  }
+}

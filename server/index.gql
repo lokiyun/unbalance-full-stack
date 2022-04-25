@@ -44,7 +44,7 @@ type Query {
   currentUser: User!
   getUsers(queryUsersInput: QueryUsersInput!): UserList!
   getNotReadMessages: [Chat!]!
-  getFriends: [Friend!]!
+  getFriends: [User!]!
 }
 
 input QueryUsersInput {

@@ -38,6 +38,11 @@ export class UserService {
     })
   }
 
+  // 根据ID查找用户
+  async findByID(id:string): Promise<User> {
+    return this.userModel.findById(id)
+  }
+
   async updateUser(userId, data): Promise<User> {
     return this.userModel.findOneAndUpdate(
       {

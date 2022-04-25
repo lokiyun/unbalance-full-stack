@@ -1,0 +1,4 @@
+{
+  "localLink": "http://localhost:4000/graphql",
+  "localSubs": "ws://localhost:4000/sub"
+}

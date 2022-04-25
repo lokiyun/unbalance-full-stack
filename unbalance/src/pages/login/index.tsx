@@ -1,9 +1,22 @@
 import React, { ChangeEvent, useState } from "react";
+import { useMutation, gql } from "@apollo/client";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "../../context/authContext";
+
+const LOGIN_TODO = gql`
+  mutation LOGIN_TODO($username: String, $password: String!) {
+    login(loginInput: { email: $username, password: $password }) {
+      email
+      username
+      token
+    }
+  }
+`;
+
 
 const Login = () => {
+  const auth = useAuth();
   const [username, setUsername] = useState(
     sessionStorage.getItem("username") || ""
   );
@@ -11,7 +24,9 @@ const Login = () => {
     sessionStorage.getItem("password") || ""
   );
 
-  const history = useNavigate();
+  const history = useNavigate()
+
+  const [loginTodo] = useMutation(LOGIN_TODO);
 
   const handleChangeUsername = (event: ChangeEvent<HTMLInputElement>) => {
     sessionStorage.setItem("username", event.target.value);
@@ -24,33 +39,21 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    axios({
-      method: "POST",
-      url: "http://localhost:4000/graphql",
-      data: {
-        query: `
-          mutation  {
-            login(loginInput: { username: "abcd0007", password: "abcd0007"}) {
-              token
-              username
-            }
-          }
-        `,
-        variables: {},
-      },
-    }).then((res: any) => {
-      if (res.status === 200) {
-        const data = res.data.data;
-        localStorage.setItem("token", data.login.token);
+    const result = await loginTodo({ variables: { username, password } });
+    console.log(result.data)
+    if (result.data) {
+      auth.signin(result.data.login.username, () => {
+        localStorage.setItem('token', result.data.login.token)
         sessionStorage.clear();
-        history("/", {
+        history("/", { 
           replace: true,
           state: {
-            username: data.login.username,
-          },
-        });
-      }
-    });
+            username: result.data.login.username
+          }
+        })
+      })
+      
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,30 +7,30 @@ import {
   HttpLink,
   split,
 } from "@apollo/client";
-import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
-import { createClient } from 'graphql-ws';
-import {IconProvider, DEFAULT_ICON_CONFIGS} from '@icon-park/react'
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import '@wangeditor/editor/dist/css/style.css'
-import './styles/index.scss';
-import '@icon-park/react/styles/index.css';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
+import { IconProvider, DEFAULT_ICON_CONFIGS } from "@icon-park/react";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "@wangeditor/editor/dist/css/style.css";
+import "./styles/index.scss";
+import "@icon-park/react/styles/index.css";
+import { getMainDefinition } from "@apollo/client/utilities";
 
-const IconConfig = {...DEFAULT_ICON_CONFIGS, prefix: 'icon'}
+const IconConfig = { ...DEFAULT_ICON_CONFIGS, prefix: "icon" };
 
-const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:4000/sub',
-  connectionParams: {
-    authToken: 'bearer token'
-  }
-}));
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: "ws://localhost:4000/sub",
+    connectionParams: {
+      authToken: "bearer token",
+    },
+  })
+);
 
 // const httpLink = new HttpLink({
 //   uri: 'http://localhost:4000/graphql'
 // });
-
-
 
 // const splitLink = split(
 //   ({ query }) => {
@@ -45,25 +45,22 @@ const wsLink = new GraphQLWsLink(createClient({
 //   httpLink,
 // );
 
-
 export const client = new ApolloClient({
   link: wsLink,
   cache: new InMemoryCache(),
 });
 // subscriptions
 
-
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+const root = ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <IconProvider value={IconConfig}>
         <App />
       </IconProvider>
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById("root"),
+  
 );
 
 // If you want to start measuring performance in your app, pass a function
